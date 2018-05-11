@@ -1,12 +1,4 @@
 /**
- * Define a aleatorização das informações
- * 
- * > Aleatorizar uma lista de palavras
- * > Aleatorizar uma matriz
- * > Aleatorizar palavras em uma matriz
-*/
-
-/**
  * Retorna um número aleatório no intervalo [min, max]
  * 
  * @param min       Número mínimo
