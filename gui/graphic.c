@@ -7,7 +7,12 @@
 
 /*   Váriaveis de controle   */
 int temCor = 0,             // Se o terminal suporta cores
-    passo_config = 1;       // Em que passo da configuração o usuário está
+    passo_config = 1,       // Em que passo da configuração o usuário está
+    entrada_matriz = 0
+
+    
+    
+    ;
 // Janelas
 WINDOW * menu, * display;  
 // Posições e tamanhos das janelas 
@@ -31,7 +36,7 @@ void print_meio(WINDOW * win, int y, int x, int largura, char * string, int negr
 void init_tela_config();
 void atualizar_config_menu();
 void config_display_tamanho_matriz();
-void config_display_fonte_matriz();
+void config_display_entrada_matriz();
 void config_display_fonte_palavras();
 void atualizar_config_display();
 void tela_config();
@@ -105,7 +110,7 @@ void init_tela_config(){
 
 void atualizar_menu_config(){
     int i;
-    char * passos[] = {"Matriz", "Tamanho", "Fonte", "Palavras", "Fonte"};
+    char * passos[] = {"Matriz", "Tamanho", "Entrada", "Palavras", "Entrada"};
     werase(menu);
     box(menu, 0, 0);
     print_meio(menu, MARGEM_INT, MARGEM_INT + 1, tamanho_menu.x + MARGEM_INT + 1, "Opções", 1);
@@ -157,7 +162,16 @@ void config_display_tamanho_matriz(){
     atualizar_display_config();
 }    
 
-void config_display_fonte_matriz(){}
+void config_display_entrada_matriz(){
+    char * opcoes[] = {"Dados do teclado", "Carregar arquivo", "Gerar aleatoriamente"};
+    int i;
+    print_meio(display, 2, 1, tamanho_display.x - 2, "entrada da matriz", 2);
+    mvwprintw(display, 4, 6, "Escolha a forma de entrada");
+    for(i = 0; i < 3; i++)
+        mvwprintw(display, 6 + i, 8, opcoes[i]);
+    wrefresh(display);
+    
+}
 
 void config_display_fonte_palavras(){}
 
@@ -171,7 +185,7 @@ void atualizar_display_config(){
     if(passo_config == 1)
         config_display_tamanho_matriz();
     else if(passo_config == 2)
-        config_display_fonte_matriz();
+        config_display_entrada_matriz();
     else if(passo_config == 4)
         config_display_fonte_palavras();
 }
