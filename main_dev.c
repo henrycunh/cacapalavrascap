@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
-#include <curses.h>
+// #include <curses.h>
 
 /* Definição de constantes */
 #define MAX_PALAVRAS 50
@@ -21,22 +21,10 @@ int H = 30;                     // Altura da matriz
 #include "random.c"         // Aleatorização das informações 
 #include "matriz.c"         // Controle da matriz 
 #include "palavras.c"       // Controle das palavras 
-#include "gui/graphic.c"    // Interface gráfica de usuário 
+// #include "gui/graphic.c"    // Interface gráfica de usuário 
 #include "gui/cli.c"        // Interface por CLI 
 
 /* Main Runtime */
 int main(int argc, char * argv[]){
-    // Checa se deve executar o programa no modo gráfico ou CLI
-    if(argc == 2)
-        if(!strcmp(argv[1], "grafico"))
-            modo_grafico();
-        else if(!strcmp(argv[1], "cli"))
-            modo_cli();
-        else
-            printf("Erro:\nArgumento invalido.\n");
-    // Checa por erros
-    else if(argc > 2)
-        printf("Erro:\nMuitos argumentos.\n");
-    else
-        printf("Erro:\nInforme o modo de execucao (grafico ou cli).\n");
+    modo_cli();
 }
