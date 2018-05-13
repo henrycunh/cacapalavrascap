@@ -10,6 +10,3 @@ int intervalo(int min, int max){
     return min + (rand() % (max - min + 1));
 }
 
-void gerar_matriz_aleatoria(){}
-
-void gerar_lista_aleatoria(){}

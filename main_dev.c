@@ -27,4 +27,5 @@ int H = 30;                     // Altura da matriz
 /* Main Runtime */
 int main(int argc, char * argv[]){
     modo_cli();
+    gerar_matriz_aleatoria();
 }
