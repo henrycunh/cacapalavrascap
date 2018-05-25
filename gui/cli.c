@@ -1,3 +1,0 @@
-void modo_cli(){
-
-}
