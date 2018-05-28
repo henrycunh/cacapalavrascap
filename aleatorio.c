@@ -1,4 +1,16 @@
 /**
+ * Contém funções usadas na aleatorização
+ * de qualquer padrão de dados utilizados
+ * na aplicação
+ * 
+ * @author  Rodrigo Lemos
+ * @info    RA  759020
+ * 
+ * @author  Jonathan Santos
+ * @info    RA  759052
+*/
+
+/**
  * Inicializa as capacidades de aleatoriedade
 */
 void inicializar_aleatoriedade(){
@@ -24,6 +36,7 @@ int intervalo(int min, int max){
 */
 void gerar_matriz_aleatoria(char matriz[MAX_LINHAS][MAX_COLUNAS], Config conf){
     int linha, coluna;
+
     //Gerador de matriz aleatória
     for (linha = 0; linha < conf.linhas; linha++)
         for (coluna = 0; coluna < conf.colunas; coluna++)
@@ -46,9 +59,8 @@ void gerar_palavras_aleatorias(
     Config conf){    
 
     // Implementação
-    int i; 
+    int i, j, horizontal, locus, posI, compr, temp, acc;
     for (i = 0; i < conf.numPalavras; i++){
-        int j, horizontal, locus, posI, compr, acc;
         // Palavra atual
         char palavra[MAX_COMP_PALAVRA];
         
@@ -56,34 +68,26 @@ void gerar_palavras_aleatorias(
         horizontal = intervalo(0, 1); 
 
         // Aleatoriza posições (linhas/colunas)
-        locus = intervalo(0, ( horizontal ? conf.linhas : conf.colunas));
-        posI  = intervalo(0, (!horizontal ? conf.linhas : conf.colunas));
-        compr = intervalo(1, (!horizontal ? conf.linhas : conf.colunas) - posI - 1);
+        locus = intervalo(0, ( horizontal ? conf.linhas : conf.colunas) - 1);
+        posI  = intervalo(0, (!horizontal ? conf.linhas : conf.colunas) - 1);
+        compr = intervalo(MIN_COMP_PALAVRA, (!horizontal ? conf.linhas : conf.colunas) - posI - 1);
 
-        printf("%d %d %d %d\n", horizontal, locus, posI, compr);
 
         // Buscar caracteres da matriz
-        for (j = posI; j <= posI + compr - 1; j++, acc++){
-            // if(horizontal) 
-            //     palavra[acc] = matriz[locus][j];
-            // else
-            //     palavra[acc] = matriz[j][locus];
-            printf("%d %d\n", locus, j);
-            // if(horizontal) 
-            //     printf("%c", matriz[locus][j]);
-            // else
-            //     printf("%c", matriz[j][locus]);
-            // printf("%c", matriz[acc]);
+        for (j = posI, acc = 0; j <= posI + compr - 1; j++, acc++){
+            if(horizontal)
+                palavra[acc] = matriz[locus][j];
+            else
+                palavra[acc] = matriz[j][locus];
         }
-        printf("\n-\n");
                             
-        // palavra[acc] = '\0';
+        palavra[acc] = '\0';
 
         // Inscreve na lista de palavras
-        // Palavra atual = { .encontrada = 0 };
-        // for(j = 0; j < acc; j++)
-        //     atual.valor[j] = palavra[j];
-        // palavras[i] = atual;
+        Palavra atual = { .encontrada = 0 };
+        for(j = 0; j < acc; j++)
+            atual.valor[j] = palavra[j];
+        palavras[i] = atual;
     }
 
 }
