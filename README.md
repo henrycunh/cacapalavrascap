@@ -6,3 +6,10 @@ Existem alguns scripts na pasta script que passam alguns parâmetros para o exec
 
     debug.bat / debug.sh
     Executa o programa no modo de debug, mostrando algumas informações intrísecas de execução.
+    
+Trabalho efetuado por:
+Henrique Cunha  | RA 759023
+Jonathan Santos | RA 759052
+Rodrigo Lemos   | RA 759020
+
+Capaz de execução em qualquer ambiente.
