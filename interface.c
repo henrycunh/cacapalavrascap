@@ -172,20 +172,40 @@ void ler_palavras(Palavra palavras[MAX_PALAVRAS], char matriz[MAX_LINHAS][MAX_CO
  * @param   palavras    Lista de palavras
  * @param   conf        Estrutura de configurações
 */
-void exibir_encontradas(Palavra palavras[MAX_PALAVRAS], Config conf){
+void exibir_encontradas(Palavra palavras[MAX_PALAVRAS], Config conf, char matriz[][MAX_COLUNAS], char matriz_palavras[][MAX_COLUNAS], char matriz_destacada[][MAX_COLUNAS], char matriz_zero[][MAX_COLUNAS]){
     int i;
+    int valida = 0;
+    int opcao;
     
     // Itera pelas palavras encontradas
     printf("*\tPALAVRAS ENCONTRADAS\n");
     for(i = 0; i < conf.numPalavras; i++)
-        if(palavras[i].encontrada)
+        if(palavras[i].encontrada) {
             printf("|\t   %s\n", palavras[i].valor);
+            valida++;
+        }
     printf("*\n\n");
 
-    // Itera pelas palavras não encontradas 
-    printf("*\tPALAVRAS NAO ENCONTRADAS\n");
-    for(i = 0; i < conf.numPalavras; i++)
-        if(!palavras[i].encontrada)
-            printf("|\t   %s\n", palavras[i].valor);
-    printf("*\n\n");
+    // Itera pelas palavras não encontradas
+    if(valida < conf.numPalavras) {
+        printf("*\tPALAVRAS NAO ENCONTRADAS\n");
+        for(i = 0; i < conf.numPalavras; i++)
+            if(!palavras[i].encontrada)
+                printf("|\t   %s\n", palavras[i].valor);
+        printf("*\n\n");
+        printf("Porcentagem de palavras encontradas: %d por cento", valida / conf.numPalavras * 100);
+        matriz_de_palavras(matriz_palavras, palavras, conf);
+        printf("Deseja criar uma matriz que contenha todas as palavras da lista?\n");
+        printf("[1] Sim\n");
+        printf("[2] Não\n");
+        scanf("%d", &opcao);
+        if(opcao == 1)
+            corrige_matriz(matriz_zero, conf, matriz_palavras);
+    }
+    printf("Deseja destacar as palavras encontradas?\n");
+    printf("[1] Sim\n");
+    printf("[2] Não\n");
+    scanf("%d", &opcao);
+    if(opcao == 1)
+        destaca_palavra(matriz, matriz_destacada, matriz_palavras, conf);
 }

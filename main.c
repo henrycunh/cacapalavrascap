@@ -31,6 +31,12 @@
 int main(int argc, char * argv[]){
     // Inicializando matriz de caracteres
     char matriz[MAX_LINHAS][MAX_COLUNAS];
+    // Inicializando matriz com as palavras da lista
+    char matriz_palavras[MAX_LINHAS][MAX_COLUNAS];
+    // Inicializando matriz de 0
+    char matriz_zero[MAX_LINHAS][MAX_COLUNAS];
+    // Inicializando matriz com palavras destacadas
+    char matriz_destacada[MAX_LINHAS][MAX_COLUNAS];
     // Inicializando lista de palavras
     Palavra palavras[MAX_PALAVRAS];
     // Inicializando configurações
@@ -55,6 +61,6 @@ int main(int argc, char * argv[]){
     // Resolução 
     verificar_palavras( matriz, palavras, conf );
     // Exibir resultado
-    exibir_encontradas( palavras, conf );    
+    exibir_encontradas( palavras, conf, matriz, matriz_palavras, matriz_destacada, matriz_zero);    
     return 0;
 }

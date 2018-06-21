@@ -8,6 +8,7 @@
 */
 
 #define NOVA_CONFIG {0, 0, 0, 0, 0}
+#define POS_VAZ {0, 0, 0, 0, 0}
 
 typedef struct {
     int linhas,
@@ -25,3 +26,11 @@ typedef struct {
     char valor[MAX_COMP_PALAVRA];
     int encontrada;
 } Palavra;
+
+typedef struct {
+    int orientacao,
+        sentido,
+        lin,
+        col,
+        tamanho;
+} Posicao;
