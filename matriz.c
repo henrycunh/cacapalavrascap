@@ -136,8 +136,11 @@ void imprimir_matriz(char matriz[MAX_LINHAS][MAX_COLUNAS], Config conf){
     int linha, coluna;
     for (linha = 0; linha < conf.linhas; linha++){
         printf("|\t");
-        for (coluna = 0; coluna < conf.colunas; coluna++)
-            printf("%3c%c", matriz[linha][coluna], (coluna == conf.colunas - 1 ? '\n' : ' ') );
+        for (coluna = 0; coluna < conf.colunas; coluna++){
+            char atual = matriz[linha][coluna];
+            atual = atual == '0' ? CHAR_PREENCHIMENTO : atual;
+            printf("%2c%c", atual, (coluna == conf.colunas - 1 ? '\n' : ' ') );
+        }
     }
 }
 
@@ -194,17 +197,17 @@ int colisao(Posicao pos, char palavra[MAX_LINHAS], char matriz[][MAX_COLUNAS]) {
 */
 void escrever_palavra(Posicao pos, char palavra[MAX_LINHAS], char matriz[][MAX_COLUNAS]) {
     int i, j = 0;
-    printf("pos: %d %d\n", pos.lin, pos.col); 
+    // printf("pos: %d %d\n", pos.lin, pos.col); 
     if(pos.orientacao == 0)
         for(int i = pos.col; i < pos.col + pos.tamanho; i++) {
-            printf("%d %d %c\n", pos.lin, i, palavra[j]);
+            // printf("%d %d %c\n", pos.lin, i, palavra[j]);
             matriz[pos.lin][i] = palavra[j];
             j++;
         }
     else if(pos.orientacao == 1) {
         int k = 0;
         for(int i = pos.lin; i < pos.lin + pos.tamanho; i++) {
-            printf("%d %d %c\n", i, pos.col, palavra[k]);
+            // printf("%d %d %c\n", i, pos.col, palavra[k]);
             matriz[i][pos.col] = palavra[k];
             k++;
         }
@@ -227,7 +230,11 @@ void encaixar_palavra(char palavra[], char matriz[][MAX_COLUNAS], Config conf) {
         for(j = 0; j < conf.colunas; j++){
             pos.lin = i;
             pos.col = j; //aleatorio(0, colunas - 1);
-            if(colisao(pos, palavra, matriz)){
+            int cabe = 
+                pos.orientacao ?
+                i + pos.tamanho < conf.linhas :
+                j + pos.tamanho < conf.colunas;
+            if(colisao(pos, palavra, matriz) && cabe){
                 escrever_palavra(pos, palavra, matriz);
                 flag = 1;
                 break;
@@ -236,20 +243,7 @@ void encaixar_palavra(char palavra[], char matriz[][MAX_COLUNAS], Config conf) {
         if(flag) break;
     }
 }
-/**
- * Mostra a matriz para o usuario
- *
- * @param     matriz      Matriz que sera preenchida
- * @param     conf        Estrutura de configurações
-*/
-void exibe_matriz(char matriz[][MAX_COLUNAS], Config conf) {
-    int i, j;
-    for(i = 0; i < conf.linhas; i++) {
-        for(j = 0; j < conf.colunas; j++)
-            printf("%c", matriz[i][j]);
-    printf("\n");
-    }
-}
+
 /**
  * Recursao de todas as funcoes que geram uma matriz a partir de palavras da lista fornecida
  *
@@ -259,10 +253,9 @@ void exibe_matriz(char matriz[][MAX_COLUNAS], Config conf) {
 */
 void corrige_matriz(char matriz_zero[][MAX_COLUNAS], Config conf, char palavras[][MAX_COLUNAS]) {
     int i;
-    matriz_zerada(matriz_zero, conf);
     for (i = 0; i < conf.numPalavras; i++)
         encaixar_palavra(palavras[i], matriz_zero, conf);
-    exibe_matriz(matriz_zero, conf);
+    imprimir_matriz(matriz_zero, conf);
 }
 
 /**
@@ -473,6 +466,7 @@ void destaca_palavra(char mat[][MAX_COLUNAS], char destaque[][MAX_COLUNAS], char
                         destaca_diag_rev_inv(palavras, mat, destaque, i, j, k, &achou);
                 }
     }
+    imprimir_matriz(destaque, conf);
 }
 
 /**

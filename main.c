@@ -14,12 +14,12 @@
 #include <time.h>
 
 // Definição de constantes
-#define MAX_LINHAS          999
-#define MAX_COLUNAS         999
-#define MAX_PALAVRAS        999
-#define MAX_COMP_PALAVRA    999
+#define MAX_LINHAS          100
+#define MAX_COLUNAS         100
+#define MAX_PALAVRAS        100
+#define MAX_COMP_PALAVRA    100
 #define MIN_COMP_PALAVRA    3
-
+#define CHAR_PREENCHIMENTO  ' '
 // Inclusão de módulos
 #include "tipos.c"
 #include "aleatorio.c"
@@ -61,6 +61,7 @@ int main(int argc, char * argv[]){
     // Resolução 
     verificar_palavras( matriz, palavras, conf );
     // Exibir resultado
-    exibir_encontradas( palavras, conf, matriz, matriz_palavras, matriz_destacada, matriz_zero);    
+    exibir_encontradas( palavras, conf, matriz, matriz_palavras, matriz_destacada, matriz_zero);
+
     return 0;
 }

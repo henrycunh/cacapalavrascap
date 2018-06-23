@@ -173,39 +173,74 @@ void ler_palavras(Palavra palavras[MAX_PALAVRAS], char matriz[MAX_LINHAS][MAX_CO
  * @param   conf        Estrutura de configurações
 */
 void exibir_encontradas(Palavra palavras[MAX_PALAVRAS], Config conf, char matriz[][MAX_COLUNAS], char matriz_palavras[][MAX_COLUNAS], char matriz_destacada[][MAX_COLUNAS], char matriz_zero[][MAX_COLUNAS]){
-    int i;
-    int valida = 0;
-    int opcao;
-    
+    int i,
+        validas = 0,
+        numNaoEncontradas = 0,
+        opcao,
+        qtdPalavras;
+    double palavrasEncontradas;
+    char naoEncontradas[MAX_PALAVRAS][MAX_COMP_PALAVRA],
+         palavrasExtras[MAX_PALAVRAS][MAX_COMP_PALAVRA];
+
     // Itera pelas palavras encontradas
     printf("*\tPALAVRAS ENCONTRADAS\n");
     for(i = 0; i < conf.numPalavras; i++)
         if(palavras[i].encontrada) {
             printf("|\t   %s\n", palavras[i].valor);
-            valida++;
+            validas++;
         }
     printf("*\n\n");
 
     // Itera pelas palavras não encontradas
-    if(valida < conf.numPalavras) {
-        printf("*\tPALAVRAS NAO ENCONTRADAS\n");
-        for(i = 0; i < conf.numPalavras; i++)
-            if(!palavras[i].encontrada)
-                printf("|\t   %s\n", palavras[i].valor);
-        printf("*\n\n");
-        printf("Porcentagem de palavras encontradas: %d por cento", valida / conf.numPalavras * 100);
-        matriz_de_palavras(matriz_palavras, palavras, conf);
-        printf("Deseja criar uma matriz que contenha todas as palavras da lista?\n");
-        printf("[1] Sim\n");
-        printf("[2] Não\n");
-        scanf("%d", &opcao);
-        if(opcao == 1)
-            corrige_matriz(matriz_zero, conf, matriz_palavras);
-    }
-    printf("Deseja destacar as palavras encontradas?\n");
-    printf("[1] Sim\n");
-    printf("[2] Não\n");
+    printf("*\tPALAVRAS NAO ENCONTRADAS\n");
+    for(i = 0; i < conf.numPalavras; i++)
+        if(!palavras[i].encontrada){
+            printf("|\t   %s\n", palavras[i].valor);
+            strcpy(naoEncontradas[numNaoEncontradas++], palavras[i].valor);
+        }
+    printf("*\n\n");
+    
+    // Estatísticas
+    palavrasEncontradas = ((double) validas / (double) conf.numPalavras) * 100.0;
+    printf("*\tESTATISTICAS\n");
+    printf("|\t   %.2lf%% das palavras foram encontradas.\n*\n", palavrasEncontradas);
+    matriz_de_palavras(matriz_palavras, palavras, conf);
+
+    printf("*\tDESTACAR MATRIZ\n");
+    printf("|\t   Deseja destacar as palavras encontradas?\n");
+    printf("|\t      [1] Sim\n");
+    printf("|\t      [2] Nao\n");
+    printf("|\t   > ");
     scanf("%d", &opcao);
     if(opcao == 1)
-        destaca_palavra(matriz, matriz_destacada, matriz_palavras, conf);
+        destaca_palavra(matriz, matriz_zero, matriz_palavras, conf);
+    printf("*\n\n");
+    
+    printf("*\tCOMPLETAR MATRIZ\n");
+    printf("|\t   Inserir as palavras nao encontradas na matriz?\n");
+    printf("|\t      [1] Sim\n");
+    printf("|\t      [2] Nao\n");
+    printf("|\t   > ");
+    scanf("%d", &opcao);
+    if(opcao == 1)
+        corrige_matriz(matriz_zero, conf, naoEncontradas);
+    printf("|\n|\t   Deseja adicionar mais palavras a matriz?\n");
+    printf("|\t      [1] Sim\n");
+    printf("|\t      [2] Nao\n");
+    printf("|\t   > ");
+    scanf("%d", &opcao);
+    if(opcao == 1){
+        printf("|\n|\t   Quantas palavras deseja adicionar?\n");
+        printf("|\t   > ");
+        scanf("%d", &qtdPalavras);
+        printf("|\n|\t   Digite as palavras a serem inseridas\n");
+        for(i = 0; i < qtdPalavras; i++){
+            printf("|\t   > ");
+            scanf("%s", &palavrasExtras[i]);
+        }
+        corrige_matriz(matriz_zero, conf, palavrasExtras);
+    }
+    printf("*\n\n");
+
+
 }
