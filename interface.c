@@ -69,7 +69,7 @@ void ler_matriz_teclado(char matriz[MAX_LINHAS][MAX_COLUNAS], Config conf){
         for(coluna = 0; coluna < conf.colunas;){
             char atual;
             scanf("%c", &atual);
-            if(atual != ' '){
+            if(atual != ' ' && atual != '\n'){
                 matriz[linha][coluna] = atual;
                 coluna++;
             }
